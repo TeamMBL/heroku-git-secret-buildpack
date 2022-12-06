@@ -18,10 +18,17 @@ if [[ -z "${GPG_KEY}" ]]; then
     exit 1
 fi
 
-echo "Installing git secret" | indent
-
-# install git secret
 mkdir -p $BUILD_DIR/vendor
+cd $BUILD_DIR/vendor
+
+echo "Installing gawk" | ident
+git clone https://git.savannah.gnu.org/r/gawk.git | ident
+cd gawk
+PREFIX="$BUILD_DIR/vendor/gawk" ./bootstrap.sh && ./configure && make && make check | ident
+PATH=$BUILD_DIR/vendor/gawk/bin:$PATH
+
+
+echo "Installing git secret" | indent
 cd $BUILD_DIR/vendor
 git clone https://github.com/sobolevn/git-secret.git | indent
 cd git-secret && make build | indent

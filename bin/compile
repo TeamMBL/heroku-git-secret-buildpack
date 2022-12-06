@@ -28,10 +28,13 @@ cd $BUILD_DIR/vendor
 echo "-----> Installing gawk"
 git clone https://git.savannah.gnu.org/r/gawk.git 2>&1 | indent
 cd gawk
-echo "Bulding gawk" | indent
+echo "Building gawk..." | indent
 ./bootstrap.sh 2>&1 >/dev/null
+echo "Step 1/3 complete" | indent
 ./configure 2>&1 >/dev/null
+echo "Step 2/3 complete" | indent
 make 2>&1 >/dev/null
+echo "Step 3/3 complete" | indent
 mkdir bin
 mv gawk ./bin/
 PATH=$BUILD_DIR/vendor/gawk/bin:$PATH
@@ -47,7 +50,6 @@ PATH=$BUILD_DIR/vendor/git-secret/bin:$PATH
 echo "-----> Configuring GPG KEY"
 cd $BUILD_DIR
 echo "$GPG_PRIVATE_KEY" | tr ',' '\n' > ./private_key.gpg
-cat private_key.gpg
 gpg --batch --yes --pinentry-mode loopback --import private_key.gpg 2>&1 | indent
 
 echo "-----> Revealing secret files"

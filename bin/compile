@@ -40,7 +40,8 @@ PATH=$BUILD_DIR/vendor/git-secret/bin:$PATH
 # try and reveal secret files
 echo "-----> Revealing secret files"
 cd $BUILD_DIR
-ls -altr 
+git rev-parse --is-inside-work-tree
+ls -altr
 if [[ -z "${GPG_PASSWORD}" ]]; then
   git secret reveal | indent
 else

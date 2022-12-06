@@ -17,7 +17,7 @@ fi
 
 echo "-----> Git-Secret Buildpack"
 
-if [[ -z "${GPG_KEY}" ]]; then
+if [[ -z "${GPG_PRIVATE_KEY}" ]]; then
     echo "GPG_PRIVATE_KEY not set. Aborting" | indent
     exit 1
 fi

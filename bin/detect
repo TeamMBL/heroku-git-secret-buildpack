@@ -1,4 +1,4 @@
 #!/bin/sh
 
-echo "-------------> Git-secret"
+echo "Git-secret"
 exit 0

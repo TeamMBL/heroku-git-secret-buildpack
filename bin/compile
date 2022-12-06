@@ -11,7 +11,7 @@ ENV_DIR=$3
 GPG_KEY=$(cat "${ENV_DIR}/GPG_PRIVATE_KEY")
 GPG_PASSWORD=$(cat "${ENV_DIR}/GPG_PASSWORD") | indent
 
-echo "-------------> Git-Secret Buildpack"
+echo "-----> Git-Secret Buildpack"
 
 if [[ -z "${GPG_KEY}" ]]; then
     echo "GPG_PRIVATE_KEY not set. Aborting" | indent
@@ -21,14 +21,16 @@ fi
 mkdir -p $BUILD_DIR/vendor
 cd $BUILD_DIR/vendor
 
-echo "Installing gawk" | ident
-git clone https://git.savannah.gnu.org/r/gawk.git | ident
+echo "----->Installing gawk"
+git clone https://git.savannah.gnu.org/r/gawk.git | indent
 cd gawk
-PREFIX="$BUILD_DIR/vendor/gawk" ./bootstrap.sh && ./configure && make && make check | ident
+PREFIX="$BUILD_DIR/vendor/gawk" ./bootstrap.sh && ./configure && make | indent
+mkdir bin
+mv gawk ./bin/
 PATH=$BUILD_DIR/vendor/gawk/bin:$PATH
 
 
-echo "Installing git secret" | indent
+echo "-----> Installing git secret"
 cd $BUILD_DIR/vendor
 git clone https://github.com/sobolevn/git-secret.git | indent
 cd git-secret && make build | indent
@@ -36,7 +38,7 @@ PREFIX="$BUILD_DIR/vendor/git-secret" make install | indent
 PATH=$BUILD_DIR/vendor/git-secret/bin:$PATH
 
 # try and reveal secret files
-echo "Revealing secret files" | indent
+echo "-----> Revealing secret files"
 cd $BUILD_DIR
 if [[ -z "${GPG_PASSWORD}" ]]; then
   git secret reveal | indent

@@ -9,7 +9,11 @@ CACHE_DIR=$2
 ENV_DIR=$3
 
 GPG_KEY=$(cat "${ENV_DIR}/GPG_PRIVATE_KEY")
-GPG_PASSWORD=$(cat "${ENV_DIR}/GPG_PASSWORD") >/dev/null
+
+if [ -f "${ENV_DIR}/GPG_PASSWORD" ]; then
+  GPG_PASSWORD=$(cat "${ENV_DIR}/GPG_PASSWORD")
+fi
+
 
 echo "-----> Git-Secret Buildpack"
 
@@ -24,7 +28,7 @@ cd $BUILD_DIR/vendor
 echo "-----> Installing gawk"
 git clone https://git.savannah.gnu.org/r/gawk.git 2>&1 | indent
 cd gawk
-PREFIX="$BUILD_DIR/vendor/gawk" ./bootstrap.sh && ./configure && make >/dev/null
+PREFIX="$BUILD_DIR/vendor/gawk" ./bootstrap.sh && ./configure && make 2>/dev/null
 mkdir bin
 mv gawk ./bin/
 PATH=$BUILD_DIR/vendor/gawk/bin:$PATH

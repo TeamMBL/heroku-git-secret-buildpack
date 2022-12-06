@@ -17,4 +17,14 @@ gpg --armor --export-secret-key heroku@domain.com | tr '\n' ','
 ```
  
 4. Add the key above to an env variable named `GPG_PRIVATE_KEY` on your heroku instance
+
+
 5. Optionally if you added a password to the gpg key at generation, set a `GPG_PASSPHRASE` env variable
+
+&nbsp;
+&nbsp;
+
+
+
+#### PLEASE NOTE:
+If you need the decrypted files to be part of your build, make sure this is the first buildpack to run.

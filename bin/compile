@@ -28,7 +28,8 @@ cd $BUILD_DIR/vendor
 echo "-----> Installing gawk"
 git clone https://git.savannah.gnu.org/r/gawk.git 2>&1 | indent
 cd gawk
-PREFIX="$BUILD_DIR/vendor/gawk" ./bootstrap.sh && ./configure && make 2>/dev/null
+echo "Bulding gawk" | indent
+PREFIX="$BUILD_DIR/vendor/gawk" ./bootstrap.sh && ./configure && make 2>&1 >/dev/null
 mkdir bin
 mv gawk ./bin/
 PATH=$BUILD_DIR/vendor/gawk/bin:$PATH
@@ -44,6 +45,7 @@ PATH=$BUILD_DIR/vendor/git-secret/bin:$PATH
 # try and reveal secret files
 echo "-----> Revealing secret files"
 cd $BUILD_DIR
+git init
 git rev-parse --is-inside-work-tree
 ls -altr
 if [[ -z "${GPG_PASSWORD}" ]]; then

@@ -9,7 +9,7 @@ CACHE_DIR=$2
 ENV_DIR=$3
 
 GPG_KEY=$(cat "${ENV_DIR}/GPG_PRIVATE_KEY")
-GPG_PASSWORD=$(cat "${ENV_DIR}/GPG_PASSWORD")
+GPG_PASSWORD=$(cat "${ENV_DIR}/GPG_PASSWORD") | indent
 
 echo "-------------> Git-Secret Buildpack"
 

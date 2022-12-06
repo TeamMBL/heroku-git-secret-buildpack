@@ -43,10 +43,10 @@ PREFIX="$BUILD_DIR/vendor/git-secret" make install | indent
 PATH=$BUILD_DIR/vendor/git-secret/bin:$PATH
 
 echo "-----> Configuring GPG KEY"
-echo "$GPG_PRIVATE_KEY" > ./private_key.gpg
-gpg --batch --yes --pinentry-mode loopback --import private_key.gpg
+cd $BUILD_DIR
+echo "$GPG_PRIVATE_KEY" | tr ',' '\n' > ./private_key.gpg
+gpg --batch --yes --pinentry-mode loopback --import private_key.gpg | indent
 
-# try and reveal secret files
 echo "-----> Revealing secret files"
 cd $BUILD_DIR
 git init | indent

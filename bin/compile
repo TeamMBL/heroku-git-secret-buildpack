@@ -61,5 +61,9 @@ else
   git secret reveal -p "$GPG_PASSWORD" | indent
 fi
 
+echo "-----> Cleaning up"
+rm -rf $BUILD_DIR/vendor/gawk
+rm -rf $BUILD_DIR/vendor/git-secret
+
 
 
